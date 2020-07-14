@@ -2,22 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:wood/components/dimension_selector.dart';
 
-class CutGroup {
-  DimensionItem dimensions;
-  Decimal maxLen = Decimal.fromInt(96);
-  Decimal sawWidth = Decimal.parse("0.25");
-  List<CutDesc> cuts = [];
-}
-
-class CutDesc {
-  Decimal len;
-  int count;
-
-  CutDesc() {
-    len = Decimal.zero;
-    count = 0;
-  }
-}
+import 'model/cuts.dart';
+import 'model/dimensions.dart';
 
 void main() {
   runApp(MyApp());
