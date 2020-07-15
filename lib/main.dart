@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Project Wood',
+      title: 'Lumber Jack',
       theme: ThemeData(
         primarySwatch: Colors.brown,
         visualDensity: VisualDensity.adaptivePlatformDensity,

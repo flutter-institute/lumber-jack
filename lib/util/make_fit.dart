@@ -15,7 +15,7 @@ List<Fit> makeFit(CutGroup cutGroup) {
   final cuts = List<CutDesc>.from(cutGroup.cuts);
   cuts.sort((c1, c2) => c1.len.compareTo(c2.len));
 
-  cutGroup.cuts.forEach((cut) {
+  cuts.forEach((cut) {
     Decimal len = cut.len * inchToMm;
     for (var i = 0; i < cut.count; i++) {
       bool newFit = true;
