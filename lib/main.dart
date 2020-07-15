@@ -286,7 +286,6 @@ class _CutSummaryState extends State<CutSummary> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    // TODO make this scrollable
                     ..._fits.map((f) => FitSummary(fit: f)),
                   ],
                 ),
