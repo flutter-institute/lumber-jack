@@ -7,7 +7,7 @@ import 'package:lumber_jack/model/fittings.dart';
 import 'package:lumber_jack/util/make_fit.dart';
 
 void main() {
-  test('handles converstion factors', () {
+  test('handles conversion factors', () {
     final first = Fit(Decimal.fromInt(10), Decimal.fromInt(1))
       ..addCuts([Decimal.one, Decimal.fromInt(8)]);
 
@@ -70,6 +70,70 @@ void main() {
     expect(fit[1].cuts, containsAll([d1, d2, d3]));
     expect(fit[2].cuts, hasLength(2));
     expect(fit[2].cuts, containsAll([d2, d3]));
+  });
+
+  test('groups a lot of cuts properly', () {
+    final d1 = Decimal.fromInt(72);
+    final d2 = Decimal.fromInt(56);
+    final d3 = Decimal.parse('43.25');
+    final d4 = Decimal.fromInt(33);
+    final d5 = Decimal.parse('32.25');
+    final d6 = Decimal.parse('31.75');
+    final d7 = Decimal.fromInt(26);
+    final d8 = Decimal.fromInt(18);
+
+    final cutGroup = CutGroup()
+      ..maxLen = Decimal.fromInt(96)
+      ..sawWidth = Decimal.parse("0.25")
+      ..dimensions = DimensionItem.twoByFour
+      ..cuts = [
+        CutDesc(d1, 6),
+        CutDesc(d2, 4),
+        CutDesc(d3, 6),
+        CutDesc(d4, 4),
+        CutDesc(d5, 6),
+        CutDesc(d6, 2),
+        CutDesc(d7, 3),
+        CutDesc(d8, 4),
+      ];
+
+    final fit = makeFit(cutGroup);
+
+    expect(fit, hasLength(17));
+    expect(fit[0].cuts, hasLength(2));
+    expect(fit[0].cuts, containsAll([d1, d8]));
+    expect(fit[1].cuts, hasLength(2));
+    expect(fit[1].cuts, containsAll([d1, d8]));
+    expect(fit[2].cuts, hasLength(2));
+    expect(fit[2].cuts, containsAll([d1, d8]));
+    expect(fit[3].cuts, hasLength(2));
+    expect(fit[3].cuts, containsAll([d1, d8]));
+    expect(fit[4].cuts, hasLength(1));
+    expect(fit[4].cuts, contains(d1));
+    expect(fit[5].cuts, hasLength(1));
+    expect(fit[5].cuts, contains(d1));
+    expect(fit[6].cuts, hasLength(2));
+    expect(fit[6].cuts, containsAll([d2, d4]));
+    expect(fit[7].cuts, hasLength(2));
+    expect(fit[7].cuts, containsAll([d2, d4]));
+    expect(fit[8].cuts, hasLength(2));
+    expect(fit[8].cuts, containsAll([d2, d4]));
+    expect(fit[9].cuts, hasLength(2));
+    expect(fit[9].cuts, containsAll([d2, d4]));
+    expect(fit[10].cuts, hasLength(2));
+    expect(fit[10].cuts, contains(d3));
+    expect(fit[11].cuts, hasLength(2));
+    expect(fit[11].cuts, contains(d3));
+    expect(fit[12].cuts, hasLength(2));
+    expect(fit[12].cuts, contains(d3));
+    expect(fit[13].cuts, hasLength(3));
+    expect(fit[13].cuts, containsAll([d5, d7]));
+    expect(fit[14].cuts, hasLength(3));
+    expect(fit[14].cuts, containsAll([d5, d7]));
+    expect(fit[15].cuts, hasLength(3));
+    expect(fit[15].cuts, containsAll([d5, d7]));
+    expect(fit[16].cuts, hasLength(2));
+    expect(fit[16].cuts, contains(d6));
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

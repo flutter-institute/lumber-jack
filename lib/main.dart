@@ -2,8 +2,11 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 import 'components/dimension_selector.dart';
+import 'components/fit_summary.dart';
 import 'model/cuts.dart';
 import 'model/dimensions.dart';
+import 'model/fittings.dart';
+import 'util/make_fit.dart';
 
 void main() {
   runApp(MyApp());
@@ -98,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Lumber Selector"),
+        // TODO drop down menu with "Reset"
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -194,12 +198,90 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               RaisedButton(
-                  onPressed: () {},
-                  child: Text("Calculate Required Number of Boards")),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return CutSummary(
+                      cutGroup: cutGroup,
+                    );
+                  }));
+                },
+                child: Text("Calculate Required Number of Boards"),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CutSummary extends StatefulWidget {
+  final CutGroup cutGroup;
+
+  const CutSummary({Key key, this.cutGroup}) : super(key: key);
+
+  @override
+  _CutSummaryState createState() => _CutSummaryState();
+}
+
+class _CutSummaryState extends State<CutSummary> {
+  bool _loading;
+  List<Fit> _fits;
+
+  @override
+  void initState() {
+    _loading = true;
+    _fits = [];
+
+    _calculateFits();
+
+    super.initState();
+  }
+
+  Future _calculateFits() async {
+    final fits = makeFit(widget.cutGroup);
+
+    setState(() {
+      _fits = fits;
+      _loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Lumber Calculator"),
+      ),
+      body: _loading
+          ? (Center(
+              child: CircularProgressIndicator(),
+            ))
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: (Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Supplies Needed:",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text(
+                      "${_fits.length}x ${widget.cutGroup.maxLen}\" ${widget.cutGroup.dimensions.inches}",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  // TODO make this scrollable
+                  ..._fits.map((f) => FitSummary(fit: f)),
+                ],
+              )),
+            ),
     );
   }
 }

@@ -19,7 +19,15 @@ class DimensionItem {
 
   String get display {
     // TODO localize for which comes first
-    return "${_mmtoin[width]}x${_mmtoin[height]} in (${width}x$height mm)";
+    return "$inches ($mm)";
+  }
+
+  String get inches {
+    return "${_mmtoin[width]}x${_mmtoin[height]}\"";
+  }
+
+  String get mm {
+    return "${width}x$height mm";
   }
 
   @override

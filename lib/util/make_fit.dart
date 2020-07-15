@@ -1,21 +1,20 @@
 import 'package:decimal/decimal.dart';
 
+import '../constants/conversions.dart';
 import '../model/cuts.dart';
 import '../model/fittings.dart';
 
-final toMM = Decimal.parse("25.4");
-
 List<Fit> makeFit(CutGroup cutGroup) {
   // Convert to mm
-  Decimal maxLen = cutGroup.maxLen * toMM;
-  Decimal sawWidth = cutGroup.sawWidth * toMM;
+  Decimal maxLen = cutGroup.maxLen * inchToMm;
+  Decimal sawWidth = cutGroup.sawWidth * inchToMm;
 
   final List<Fit> mmFits = [];
 
   // TODO sort cutGroup by length. Longest first.
 
   cutGroup.cuts.forEach((cut) {
-    Decimal len = cut.len * toMM;
+    Decimal len = cut.len * inchToMm;
     for (var i = 0; i < cut.count; i++) {
       bool newFit = true;
       for (var f = 0; f < mmFits.length; f++) {
@@ -36,5 +35,5 @@ List<Fit> makeFit(CutGroup cutGroup) {
     }
   });
 
-  return mmFits.map((fit) => fit / toMM).toList();
+  return mmFits.map((fit) => fit / inchToMm).toList();
 }
