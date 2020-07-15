@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wood/model/dimensions.dart';
 
+import '../model/dimensions.dart';
 import 'dropdown_formfield.dart';
 
 final List<DimensionItem> lumberSizes = [

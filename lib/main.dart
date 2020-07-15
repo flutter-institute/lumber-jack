@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:wood/components/dimension_selector.dart';
 
+import 'components/dimension_selector.dart';
 import 'model/cuts.dart';
 import 'model/dimensions.dart';
 

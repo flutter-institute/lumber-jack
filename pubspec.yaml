@@ -1,5 +1,5 @@
-name: wood
-description: App to help you estimate how much wood you need for a project
+name: lumber_jack
+description: App to help you estimate how much lumber you need for a project
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 

@@ -1,6 +1,6 @@
-# wood
+# Lumber Jack
 
-App to help you estimate how much wood you need for a project
+App to help you estimate how much lumber you need for a project
 
 ## Getting Started
 

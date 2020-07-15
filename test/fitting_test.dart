@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wood/model/cuts.dart';
-import 'package:wood/model/dimensions.dart';
-import 'package:wood/model/fittings.dart';
+import 'package:lumber_jack/model/cuts.dart';
+import 'package:lumber_jack/model/dimensions.dart';
+import 'package:lumber_jack/model/fittings.dart';
 
-import 'package:wood/util/make_fit.dart';
+import 'package:lumber_jack/util/make_fit.dart';
 
 void main() {
   test('handles converstion factors', () {
