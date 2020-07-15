@@ -139,63 +139,71 @@ class _MyHomePageState extends State<MyHomePage> {
                 onSaved: _onSawWidthChange,
                 onChanged: _onSawWidthChange,
               ),
-              ...cutGroup.cuts.asMap().entries.map((desc) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: "Number of Cuts",
-                          suffixText: "qty",
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...cutGroup.cuts.asMap().entries.map((desc) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                autofocus: true,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: "Number of Cuts",
+                                  suffixText: "qty",
+                                ),
+                                onSaved: (val) {
+                                  _onCutQuantityChanged(desc.key, val);
+                                },
+                                onChanged: (val) {
+                                  _onCutQuantityChanged(desc.key, val);
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text("@"),
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                keyboardType: TextInputType.numberWithOptions(
+                                  signed: false,
+                                  decimal: true,
+                                ),
+                                decoration: const InputDecoration(
+                                  labelText: "Length of Cuts",
+                                  suffixText: "inches",
+                                ),
+                                onSaved: (val) {
+                                  _onCutLengthChange(desc.key, val);
+                                },
+                                onChanged: (val) {
+                                  _onCutLengthChange(desc.key, val);
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                      FlatButton(
+                        onPressed: () {
+                          setState(() {
+                            cutGroup.cuts.add(CutDesc());
+                          });
+                        },
+                        child: Row(
+                          children: [Icon(Icons.add), Text("Add Cut")],
                         ),
-                        onSaved: (val) {
-                          _onCutQuantityChanged(desc.key, val);
-                        },
-                        onChanged: (val) {
-                          _onCutQuantityChanged(desc.key, val);
-                        },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text("@"),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(
-                          signed: false,
-                          decimal: true,
-                        ),
-                        decoration: const InputDecoration(
-                          labelText: "Length of Cuts",
-                          suffixText: "inches",
-                        ),
-                        onSaved: (val) {
-                          _onCutLengthChange(desc.key, val);
-                        },
-                        onChanged: (val) {
-                          _onCutLengthChange(desc.key, val);
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              }),
-              FlatButton(
-                onPressed: () {
-                  setState(() {
-                    cutGroup.cuts.add(CutDesc());
-                  });
-                },
-                child: Row(
-                  children: [Icon(Icons.add), Text("Add Cut")],
+                    ],
+                  ),
                 ),
               ),
-              Expanded(
-                child: SizedBox(
-                  height: 10,
-                ),
+              SizedBox(
+                height: 10,
               ),
               RaisedButton(
                 onPressed: () {
@@ -255,32 +263,34 @@ class _CutSummaryState extends State<CutSummary> {
         title: Text("Lumber Calculator"),
       ),
       body: _loading
-          ? (Center(
+          ? Center(
               child: CircularProgressIndicator(),
-            ))
+            )
           : Padding(
               padding: const EdgeInsets.all(8.0),
-              child: (Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Supplies Needed:",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SizedBox(height: 5),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      "${_fits.length}x ${widget.cutGroup.maxLen}\" ${widget.cutGroup.dimensions.inches}",
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Supplies Needed:",
                       style: Theme.of(context).textTheme.headline5,
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  // TODO make this scrollable
-                  ..._fits.map((f) => FitSummary(fit: f)),
-                ],
-              )),
+                    SizedBox(height: 5),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text(
+                        "${_fits.length}x ${widget.cutGroup.maxLen}\" ${widget.cutGroup.dimensions.inches}",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    // TODO make this scrollable
+                    ..._fits.map((f) => FitSummary(fit: f)),
+                  ],
+                ),
+              ),
             ),
     );
   }
