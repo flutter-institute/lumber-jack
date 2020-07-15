@@ -11,7 +11,9 @@ List<Fit> makeFit(CutGroup cutGroup) {
 
   final List<Fit> mmFits = [];
 
-  // TODO sort cutGroup by length. Longest first.
+  // Defensive copy
+  final cuts = List<CutDesc>.from(cutGroup.cuts);
+  cuts.sort((c1, c2) => c1.len.compareTo(c2.len));
 
   cutGroup.cuts.forEach((cut) {
     Decimal len = cut.len * inchToMm;
