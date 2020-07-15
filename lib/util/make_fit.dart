@@ -13,7 +13,7 @@ List<Fit> makeFit(CutGroup cutGroup) {
 
   // Defensive copy
   final cuts = List<CutDesc>.from(cutGroup.cuts);
-  cuts.sort((c1, c2) => c1.len.compareTo(c2.len));
+  cuts.sort((c1, c2) => c2.len.compareTo(c1.len));
 
   cuts.forEach((cut) {
     Decimal len = cut.len * inchToMm;

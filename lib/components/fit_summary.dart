@@ -35,8 +35,6 @@ class _FitPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var bounds = Offset.zero & size;
-    print("Size: $size");
-    print("Rect: $bounds");
 
     // TODO handle scale
 
@@ -62,8 +60,6 @@ class _FitPainter extends CustomPainter {
       final relativeWidth = cutWidth / fit.totalLen;
       final width = size.width * relativeWidth.toDouble();
       final right = left + width;
-
-      print("cut: $cutWidth, left: $left, right: $right, height: $height");
 
       // Cut line segment
       canvas.drawPath(
